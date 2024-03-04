@@ -81,6 +81,8 @@ const closeRef= useRef()
         </div>
 </div>
 </div>
+<div className='text-[18px] flex justify-center items-center w-[50%]'>ALPA is a multifunctional vehicle, ideal for rapid postal or food delivery services but also convertible for 
+    family use, comfortably carrying 2 children in the approved seats, or for the leisure travels</div>
 </div>
 {imageNumber?(
   <div
