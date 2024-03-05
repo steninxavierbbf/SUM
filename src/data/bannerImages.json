@@ -1,0 +1,26 @@
+
+{
+    "bikes":[
+        {
+            "name":"alpa",
+            "images":["https://media.bbf-bike.de/shop/documents/websites/sum/images/alpa/alpa_photo1",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/alpa/alpa_photo2",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/alpa/alpa_photo3",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/alpa/alpa_photo4"]
+        },
+        {
+            "name":"stealth",
+            "images":["https://media.bbf-bike.de/shop/documents/websites/sum/images/stealth/stealth_photo1",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/stealth/stealth_photo2",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/stealth/stealth_photo3",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/stealth/stealth_photo4"] 
+        },
+        {
+            "name":"uco",
+            "images":["https://media.bbf-bike.de/shop/documents/websites/sum/images/uco/uco_photo1",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/uco/uco_photo2",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/uco/uco_photo3",
+            "https://media.bbf-bike.de/shop/documents/websites/sum/images/uco/uco_photo4"] 
+        }
+    ]
+}

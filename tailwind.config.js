@@ -8,10 +8,12 @@ module.exports = {
     colors: {
       "sum-blue": "#216DD1",
       "sum-white": "#FFFFFF",
-      "sum-gray": "EEEDEB",
+      "sum-gray": "#EEEDEB",
       
     }
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate"),
+  require('tailwindcss'),
+  require('autoprefixer'),],
 }
 
