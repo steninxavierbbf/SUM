@@ -1,10 +1,27 @@
 import React, { useRef, useState,useEffect } from 'react'
-
-import Logo from "../images/Logo_SUM.png"
-
+import axios from 'axios'
 import "../main.css"
 const BannerSection = ({bikes,refcall}) => {
 const [imageNumber,setImageNumber]=useState(0)
+const[block,setBlock]=useState([])
+const[article,setArticle]= useState([])
+
+const bikesArray= async()=>{
+  if(bikes?.id!==undefined){
+    const response = await axios.get(`https://data.bbf-bike.de/catalog/list/categories/articles/${bikes?.id}`)
+    
+    setBlock(response?.data?.blocks)
+    setArticle(response?.data?.articles)
+  }
+
+
+
+}
+
+console.log(article)
+useEffect(()=>{
+bikesArray()
+},[bikes?.id])
 
 const closeRef= useRef()
     const imageEnlargement=(number)=>{
@@ -20,11 +37,11 @@ const closeRef= useRef()
         document.addEventListener("click", handleClickOutside, true);
       }, []);
 
-const sample= bikes?.name!==undefined? bikes?.name:""
-console.log(sample)
+
+
   return (
     <div>
-    <div className={`flex justify-center items-center flex-col  ${bikes?.name==="alpa"? "xs:mt-0 lg:mt-[150px]":""}`} id={bikes?.name!==undefined? bikes?.name:""} ref={refcall}>
+    <div className={`flex justify-center items-center flex-col  ${bikes?.name==="alpa"? "xs:mt-0 lg:mt-[150px]":""}`} id={bikes?.name!==undefined || bikes?.id!==undefined? bikes?.name:""} ref={refcall}>
     <div className={`md:w-[60%] xs:w-[90%] ${bikes?.name!==undefined? "md:pb-20 xs:pb-5 xs:mt-[100px] md:mt-[150px]":""} ${bikes?.name==="stealth"?"bg-sum-gray":"bg-sum-white"} `} >
 
 {bikes?.name==="stealth"?( <div className='grid-container '>
@@ -147,22 +164,34 @@ console.log(sample)
 </div>):""
        
     }    
-    {bikes?.name!==undefined? ( <div className='xs:text-[13px] md:text-[22px] flex justify-center items-center font-regular'>
-        <p className='md:w-[60%] xs:w-[90%] '>ALPA is a multifunctional vehicle, ideal for rapid postal or food delivery services but also convertible for 
-        family use, comfortably carrying 2 children in the approved seats, or for the leisure travels</p>
+    {bikes?.name!==undefined? ( <div className='xs:text-[13px] md:text-[20px] flex justify-center items-center font-regular mb-6'>
+        <p className='md:w-[65%] xs:w-[90%] '>{bikes.description}</p>
+    
         </div>):""}
+
+        {
+          bikes?.name!==undefined?(<div className='px-32 flex justify-between items-center'>
+            
+            <div className='grid grid-cols-2 gap-48'>
+            
+            {article?.map((item)=>(
+            (
+              <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-[350px] w-[350px] object-contain'/></div>
+            )
+          ))}</div></div>):""
+        }
    
     </div>
   
 {imageNumber?(
   <div
-  className="fixed inset-0 z-50 lg:flex gap-10 md:items-center md:justify-center flex-col
-  sm:flex sm:flex-col  overflow-x-hidden    outline-none focus:outline-none 
+  className="fixed inset-0 z-50 xs:flex gap-10 xs:items-center xs:justify-center flex-col
+  overflow-x-hidden    outline-none focus:outline-none 
 transition-transform  duration-700 transform 
-hover:opacity-100 backdrop-blur-sm md:bg-sum-white/100 sm:bg-sum-white/100 shadow-xl animate-in fade-in text-white"
+hover:opacity-100 backdrop-blur-sm md:bg-sum-white/40 sm:bg-sum-white/40 shadow-xl animate-in fade-in text-white cursor-pointer"
 >
-    <img src={Logo} className='w-44 object-contain md:block hidden' />
-    <img src={imageNumber===1?bikes?.images[0]:imageNumber===2?bikes?.images[1]:imageNumber===3?bikes?.images[2]:bikes?.images[3]} className='w-[90%] h-[75%] object-contain' />
+    
+    <img src={imageNumber===1?bikes?.images[0]:imageNumber===2?bikes?.images[1]:imageNumber===3?bikes?.images[2]:bikes?.images[3]} className='w-[65%] h-[80%] object-cover' />
 </div>
 ):""}
   </div>

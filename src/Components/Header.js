@@ -4,12 +4,35 @@ import bikes from "../data/bannerImages.json"
 import BannerSection from './BannerSection'
 import Contact from './Contact'
 import { Link, animateScroll as scroll } from "react-scroll";
-
+import axios from 'axios'
 const Header = () => {
     const[isScrolled,setIsScrolled]= useState(false)
+    const[category,setCategory]= useState([])
     const sectionsRef=useRef([])
     const menus=["alpa","stealth","uco","contact"]
     const[visibleSection,setVisibleSection]=useState(menus[0])
+    const categories= async() =>{
+      const response = await axios.get("https://data.bbf-bike.de/catalog/list/categories/39")
+      setCategory(response.data)
+    }
+
+
+    useEffect(()=>{
+    categories()
+    },[])
+const mainSection= category?.filter((item)=>item?.bbf_cat_name==="2024").map((item)=>item?.bbf_cat_ID_PUBLICGRPORDER).find((item)=>item)
+
+const categoriesBikes=category?.filter((item)=>item?.bbf_cat_parent_category===mainSection)
+
+bikes?.bikes?.map((bike)=>categoriesBikes?.map((item)=>{
+  if(item?.bbf_cat_SHORTNAME===bike?.name){
+    bike.id=item?.bbf_cat_ID_PUBLICGRPORDER
+    bike.description=item?.translations?.german?.DESCRIPTION
+  }
+}))
+
+console.log(bikes)
+
     useEffect(() => {
       const options = {
         threshold: 0.5
@@ -72,7 +95,7 @@ const Header = () => {
    
     </div>
 
-    {/* DEsktop navigation */}
+    {/* Desktop navigation */}
     <div className={`${isScrolled?"h-[150px]":"h-[300px]"} w-screen fixed top-0 left-0 bg-sum-white z-50 xs:hidden md:block`}>
         <div className='flex justify-center items-center sm:gap-0 md:gap-12 xs:py-0 md:py-10 flex-col'>
         <img src={Logo} className={`object-contain w-72 ${isScrolled?"hidden ":"block"}`} />
@@ -94,8 +117,10 @@ const Header = () => {
         </div>
         </div>
     </div>
+    
     {bikes?.bikes?.map((bike,key)=>(
-      <BannerSection bikes={bike} refcall={refCallback} key={key}/>
+      
+          <BannerSection bikes={bike}  refcall={refCallback} key={key}/>
     ))}
     <div id="contact"  ref={refCallback}>
     <Contact/>
