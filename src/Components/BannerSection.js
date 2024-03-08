@@ -5,6 +5,36 @@ const BannerSection = ({bikes,refcall}) => {
 const [imageNumber,setImageNumber]=useState(0)
 const[block,setBlock]=useState([])
 const[article,setArticle]= useState([])
+const [currentIndex, setCurrentIndex] = useState(0);
+
+// const prevImage = () => {
+//   setCurrentIndex((prevIndex) =>
+//     prevIndex === 0 ? images?.images?.length - 1 : prevIndex - 1
+//   );
+// };
+// const nextImage = () => {
+//   setCurrentIndex((prevIndex) =>
+//     prevIndex === images?.images?.length - 1 ? 0 : prevIndex + 1
+//   );
+// };
+
+// useEffect(() => {
+  
+//     const timer = setTimeout(() => {
+//       setCurrentIndex((prevIndex) => {
+//         const nextIndex =
+//           images && images?.images.length > 0
+//             ? (prevIndex + 1) % images.images.length
+//             : 0;
+
+//         return nextIndex;
+//       });
+//     }, 5000);
+//     return () => clearTimeout(timer);
+  
+// }, [currentIndex]);
+
+
 
 const bikesArray= async()=>{
   if(bikes?.id!==undefined){
@@ -13,12 +43,31 @@ const bikesArray= async()=>{
     setBlock(response?.data?.blocks)
     setArticle(response?.data?.articles)
   }
-
-
-
 }
+const groupedData = Object.values(
+  article.reduce((r, o) => {
+      (r[o?.descriptions.default.TEXT5] = r[o?.descriptions.default.TEXT5] || []).push(o);
+      return r;
+  }, {})
+);
 
-console.log(article)
+
+const mergedData=groupedData?.map((item)=>{
+  Object.values(item.reduce((acc, obj) => {
+    if (!acc[obj.PARTNAME]) {
+      acc[obj.PARTNAME] = obj;
+    } else {
+      acc[obj.PARTNAME].myData = acc[obj.PARTNAME].media ?? []; 
+      acc[obj.PARTNAME].myData = acc[obj.PARTNAME].media.concat(obj.media);
+    }
+    return acc;
+  }, {}));
+})
+
+
+console.log(mergedData)
+
+
 useEffect(()=>{
 bikesArray()
 },[bikes?.id])
@@ -42,7 +91,7 @@ const closeRef= useRef()
   return (
     <div>
     <div className={`flex justify-center items-center flex-col  ${bikes?.name==="alpa"? "xs:mt-0 lg:mt-[150px]":""}`} id={bikes?.name!==undefined || bikes?.id!==undefined? bikes?.name:""} ref={refcall}>
-    <div className={`md:w-[60%] xs:w-[90%] ${bikes?.name!==undefined? "md:pb-20 xs:pb-5 xs:mt-[100px] md:mt-[150px]":""} ${bikes?.name==="stealth"?"bg-sum-gray":"bg-sum-white"} `} >
+    <div className={`md:w-[60%] xs:w-[90%] ${bikes?.name!==undefined? "md:pb-20 xs:pb-5 xs:mt-[100px] md:mt-[150px]":""} ${bikes?.name==="stealth"?"bg-sum-white":"bg-sum-white"} `} >
 
 {bikes?.name==="stealth"?( <div className='grid-container '>
             <div className={`gallery__item--2-1 group relative  cursor-pointer`} onClick={()=>imageEnlargement(1)}>
@@ -165,20 +214,117 @@ const closeRef= useRef()
        
     }    
     {bikes?.name!==undefined? ( <div className='xs:text-[13px] md:text-[20px] flex justify-center items-center font-regular mb-6'>
-        <p className='md:w-[65%] xs:w-[90%] '>{bikes.description}</p>
+        <p className='md:w-[65%] xs:w-[90%] '>
+          {bikes?.description?.split(",").map((item)=>(
+          <div className='flex justify-start gap-3 items-start'><div>•</div><div>{item}</div> </div>
+        ))}</p>
     
         </div>):""}
 
         {
-          bikes?.name!==undefined?(<div className='px-32 flex justify-between items-center'>
+          bikes?.name!==undefined?(<div className='px-32 flex justify-between items-center mt-32'>
             
             <div className='grid grid-cols-2 gap-48'>
             
-            {article?.map((item)=>(
+            
+            {/* {article?.map((item)=>(
             (
-              <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-[350px] w-[350px] object-contain'/></div>
+              <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[1]?.IMAGENAME}`} className='h-[350px] w-[350px] object-contain'/></div>
             )
-          ))}</div></div>):""
+          ))} */}
+
+
+{/* <div className="bg-white rounded-md">
+                <div
+                  className="relative flex justify-center items-center flex-col"
+                >
+                 
+                  
+                 
+                      {groupedData?.map((item, index) => (
+                        <div className="flex justify-center items-center cursor-pointer">
+                          {item.map((item)=>(
+                            <img
+                            src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`}
+                            alt={`Slide ${index + 1}`}
+                            className={`md:w-56 md:h-56 sm:h-48 sm xl:w-80 xl:h-80 object-contain p-4 ${
+                              index === currentIndex &&
+                              typeof currentIndex === "number"
+                                ? "block"
+                                : "hidden"
+                            }`}
+                          />
+                          ))}
+                          
+                        </div>
+                      ))}
+              
+                 
+
+                  <button
+                    type="button"
+                    className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    onClick={prevImage}
+                  >
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXM
+          AAAsTAAALEwEAmpwYAAACSElEQVR4nO2az04UQRDGfycXDxpMFLzJ0QOc8CbeDMREI0f+PAOB8BaABw0mhiuPIKzKGx
+          DjWdg/J8E1EPAsQijTSZlslpmdmZ7umR7Cl3zJbHantr5UT3VV9cANri/uAdPAGlAH9oHfwJnSXO/pd+Y3r4FBAkEN
+          mAd2gAtAMtLc8xmYU1uF4zawDPy0cD6Oh8ASMFCUiBdA26GAXraAKZ8CTOjfeRTQy02NvFMMA98KFCHKr8CQKxEjGm4pi
+          U31IRceaBqVktkGHtqKGChpOUmfZWaVoj8E4Lz0cN0mxUqgnEwrwoSvEYDDEsNW2k1zOQBnJYGLaaJxGICjksCDpAd/Puc
+          fHAHjwEQBYmb7CdnJKWJU7TwpQMinfv3EhQMRo/rZt5Bz4G6UkGlLg8fAmNp4DPwqQIQoX0YJeVORSEgXV6OE1CsUCVF+jBL
+          SrFAkRGkK2is4rVAkpMuXKzhLebNJrb7xNKUvf0IX8iyPENul1QltaTUq+LDv+Ui/nVDS75qFobIjs+KzROmUXaIMVqxo/BtX
+          NBp8qVAZv00fzOU0fqQi0u4DeThzXVrdWyRgKQBHJYELSSL+RyWEManEsJll4jgVgMMSwUvgORnxPgDHpYdvsUBNB8cSCHfTPO
+          BxuB/QscIwOTGSsQ12zQbwCEcYKmmZ7ephk5fD0MuCRGz4Pnuf9LzU9m1SrC1qOto/cCjgh+7YpbwBUdOpeF1nsVmdP9cqdiZPan
+          UN0xu80jHmlvbTJ10v1Zjr79qermhTdMe5FzcgDPwDzOEXEz5EkHIAAAAASUVORK5CYII="
+                      className="md:h-9 md:w-9 sm:h-6 sm:w-6 "
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    onClick={nextImage}
+                    data-carousel-next
+                  >
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmp
+         wYAAACRUlEQVR4nO2az0sVURTHP6ueLQqF0na5bKGrXJXLUIIil/74GyTxvzBbFAXRtj+hepX/gUTrfD5dpSVKutYMTwwcIR7z8947d
+         84Tv/CFgfdm5nw4d+6cc+/ApS6uhoAZYBVoAx3gCDhRJ8cb+lvynyfAIEbUAhaANeAvIBWdnPMZmNdrRddVYBn46RB8lneBJWAgFsRD
+         YDsgQK+3gOk6AZLUv6wRoNfvNPNBNQJ8iwgh6q/AcCiIUU23NOSuxuClmzqNSsPeBm65Qgw0NJwkZ5g5TdFvDAQvPX7lMsWKUU+VhUjS
+         t2kgYMnwVtmX5rKBYKXAT8tkY9dAoFLgnaIHfyFCEPeBCWDf8zpzeSBrEUDu6r3GPGE+5fUTLqV4Ve8rhC/MKXA9DWQmAsS5D4Bxve8d
+         4JfjdR6lgTyPCBIqM8/SQNqRQUJk5n0aSLcBEN/MdNJADhsC8cnMQRrIScmT71G/JkrGcuwDMmkd5NDQ0NrzGVqbffiwb1idfvdCTL+
+         rfZQJUa9YK1GqZkLySpTBPisa/2QVjYm+9FEZ/5EczUcAmQzUWM1elFb3CgVaMhCoFHixCOI8KxaWSSXD3SorjtMGApYUnwEPqKjXBgK
+         XHr/AQS1dOBYjXi/zgGfphqFthRE8NdpgGyxald8mkIYbGmbrutlUy2boWSSIt3XvvU/VPNQ6LlOsq1q6tL8TEOCHvrEb+QKipavibV2
+         LrRr8qVaxsz5Ta2glvcFjXcb8oP307/8+qkmOv2t7uqJN0bXgUVwKG/oHEqcXDufAk+UAAAAASUVORK5CYII="
+                      className="md:h-9 md:w-9 sm:h-6 sm:w-6"
+                    />
+                  </button>
+                
+              </div>
+
+</div> */}
+
+
+
+
+
+
+
+
+          {groupedData.map((item)=>(
+            <div>
+               <p>{item[0].PARTNAME}</p>
+              {item.map((item)=>(
+              <div><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-[350px] w-[350px] object-contain'/></div>
+            ))}
+            
+           
+            </div>
+
+          ))}
+  
+          
+          </div></div>):""
         }
    
     </div>
