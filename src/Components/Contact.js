@@ -34,8 +34,8 @@ const handleSubmit=(e)=>{
 }
   return (
     <div className=' flex justify-center items-center'>
-    <div className=' xs:w-[90%] md:w-[60%] xs:py-12 md:p-32  bg-sum-gray mt-[110px] md:block xs:flex xs:justify-center'>
-        <div className='flex md:justify-between xs:justify-center xs:items-start md:items-start md:flex-row xs:flex-col'>
+    <div className=' xs:w-[90%] xl:w-[60%] xs:py-12 md:p-20  bg-sum-gray mt-[110px] xl:block xs:flex xs:justify-center'>
+        <div className='flex md:justify-between xs:justify-center xs:items-start md:items-start xl:flex-row xs:flex-col'>
         <div className='flex flex-col justify-start xs:items-end md:items-end gap-6 '>
             <p className='flex justify-start items-start gap-2 flex-col'>
                 <input type='text' className='md:w-[350px] xs:w-[250px] border-sum-black border-[1px] xs:h-8 md:h-10 focus:outline-none p-3' 
@@ -71,7 +71,7 @@ const handleSubmit=(e)=>{
                     <p>{success}</p></div>:""
             }
         </div>
-        <div className='flex justify-start items-start flex-col gap-5 xs:mt-16 md:mt-0'>
+        <div className='flex justify-start items-start flex-col gap-5 xs:mt-16 xl:mt-0'>
            
            <p className='font-regular xs:text-[14px] md:text-[18px]'>
            <h3 className='font-bold xs:text-[15px] md:text-[22px]'>Contact</h3>

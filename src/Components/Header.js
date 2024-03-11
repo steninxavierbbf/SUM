@@ -83,10 +83,10 @@ console.log(bikes)
   return (
     <>
     {/* mobile navigation */}
-    <div className='h-[80px] md:hidden  w-screen fixed top-0 left-0 bg-sum-white z-50 xs:flex justify-center items-center'>
-      <div className=' flex justify-between items-center flex-row gap-5 font-bold text-[12px] w-[90%] '>
-      <img src={Logo} className='object-contain w-24 cursor-pointer'/>
-      <div className='flex justify-center items-center flex-row gap-4 font-bold text-[13px]'>
+    <div className='xs:h-[80px] md:h-[100px] xl:hidden  w-screen fixed top-0 left-0 bg-sum-white z-50 xs:flex justify-center items-center'>
+      <div className=' flex justify-between items-center flex-row gap-5 font-bold md:text-[20px] xs:text-[12px] w-[90%] '>
+      <img src={Logo} className='object-contain xs:w-24 md:w-40 cursor-pointer'/>
+      <div className='flex justify-center items-center flex-row gap-4 font-bold md:text-[25px] xs:text-[13px]'>
             {menus.map((item,index)=>(
      <p className={`${visibleSection===item?"text-sum-blue [transition:all_0.6s_ease]":""}`} key={index}><a href={`#${item}`}>{item.toUpperCase()}</a></p>
           ))}
@@ -96,7 +96,7 @@ console.log(bikes)
     </div>
 
     {/* Desktop navigation */}
-    <div className={`${isScrolled?"h-[150px]":"h-[300px]"} w-screen fixed top-0 left-0 bg-sum-white z-50 xs:hidden md:block`}>
+    <div className={`${isScrolled?"h-[150px]":"h-[300px]"} w-screen fixed top-0 left-0 bg-sum-white z-50 xs:hidden xl:block`}>
         <div className='flex justify-center items-center sm:gap-0 md:gap-12 xs:py-0 md:py-10 flex-col'>
         <img src={Logo} className={`object-contain w-72 ${isScrolled?"hidden ":"block"}`} />
         <div className={`flex justify-center items-center flex-row xs:gap-5 md:gap-10 font-bold text-[35px] ${isScrolled?"hidden ":"block"} `}>

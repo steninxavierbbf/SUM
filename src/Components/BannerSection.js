@@ -1,6 +1,8 @@
 import React, { useRef, useState,useEffect } from 'react'
 import axios from 'axios'
 import "../main.css"
+import { Carousel } from 'react-responsive-carousel'
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 const BannerSection = ({bikes,refcall}) => {
 const [imageNumber,setImageNumber]=useState(0)
 const[block,setBlock]=useState([])
@@ -51,23 +53,29 @@ const groupedData = Object.values(
   }, {})
 );
 
-
-const mergedData=groupedData?.map((item)=>{
-  Object.values(item.reduce((acc, obj) => {
-    if (!acc[obj.PARTNAME]) {
-      acc[obj.PARTNAME] = obj;
-    } else {
-      acc[obj.PARTNAME].myData = acc[obj.PARTNAME].media ?? []; 
-      acc[obj.PARTNAME].myData = acc[obj.PARTNAME].media.concat(obj.media);
-    }
-    return acc;
-  }, {}));
-})
+const groupedImages=groupedData?.map(item=>item.map((item)=>item?.media[0]?.IMAGENAME))
 
 
-console.log(mergedData)
+const groupedColors=groupedData?.map(item=>item.map((item)=>item?.properties?.default?.primary?.filter((item)=>item.ATTRIBUTE==="Farbe")))
 
 
+
+// const mergedData=groupedData?.map((item)=>{
+//   Object.values(item.reduce((acc, obj) => {
+//     if (!acc[obj.PARTNAME]) {
+//       acc[obj.PARTNAME] = obj;
+//     } else {
+//       acc[obj.PARTNAME].myData = acc[obj.PARTNAME].media ?? []; 
+//       acc[obj.PARTNAME].myData = acc[obj.PARTNAME].media.concat(obj.media);
+//     }
+//     return acc;
+//   }, {}));
+// })
+
+
+// console.log(mergedData)
+
+console.log(groupedData)
 useEffect(()=>{
 bikesArray()
 },[bikes?.id])
@@ -91,7 +99,7 @@ const closeRef= useRef()
   return (
     <div>
     <div className={`flex justify-center items-center flex-col  ${bikes?.name==="alpa"? "xs:mt-0 lg:mt-[150px]":""}`} id={bikes?.name!==undefined || bikes?.id!==undefined? bikes?.name:""} ref={refcall}>
-    <div className={`md:w-[60%] xs:w-[90%] ${bikes?.name!==undefined? "md:pb-20 xs:pb-5 xs:mt-[100px] md:mt-[150px]":""} ${bikes?.name==="stealth"?"bg-sum-white":"bg-sum-white"} `} >
+    <div className={`xl:w-[60%] xs:w-[90%] ${bikes?.name!==undefined? "md:pb-20 xs:pb-5 xs:mt-[100px] xl:mt-[150px]":""} ${bikes?.name==="stealth"?"bg-sum-white":"bg-sum-white"} `} >
 
 {bikes?.name==="stealth"?( <div className='grid-container '>
             <div className={`gallery__item--2-1 group relative  cursor-pointer`} onClick={()=>imageEnlargement(1)}>
@@ -213,8 +221,8 @@ const closeRef= useRef()
 </div>):""
        
     }    
-    {bikes?.name!==undefined? ( <div className='xs:text-[13px] md:text-[20px] flex justify-center items-center font-regular mb-6'>
-        <p className='md:w-[65%] xs:w-[90%] '>
+    {bikes?.name!==undefined? ( <div className='xs:text-[16px] md:text-[20px] flex justify-center items-center font-regular mb-6'>
+        <p className='xl:w-[65%] xs:w-[90%] '>
           {bikes?.description?.split(",").map((item)=>(
           <div className='flex justify-start gap-3 items-start'><div>•</div><div>{item}</div> </div>
         ))}</p>
@@ -222,9 +230,10 @@ const closeRef= useRef()
         </div>):""}
 
         {
-          bikes?.name!==undefined?(<div className='px-32 flex justify-between items-center mt-32'>
+          bikes?.name!==undefined?(
+          <div className='md:w-full xs:w-[90%] md:px-20 flex justify-center items-center xs:mt-8 md:mt-16 xl:mt-32'>
             
-            <div className='grid grid-cols-2 gap-48'>
+            
             
             
             {/* {article?.map((item)=>(
@@ -310,23 +319,98 @@ const closeRef= useRef()
 
 
 
-
+<div className={`grid grid-cols-1 gap-24`}>
           {groupedData.map((item)=>(
-            <div>
-               <p>{item[0].PARTNAME}</p>
+            <div className='flex justify-center items-center flex-col'>
+               <p className='xs:mb-6 md:mb-16 text-sum-blue xs:text-[15px] md:text-[30px] font-bold'>{item[0]?.descriptions?.default?.TEXT5}</p>
+
+               <Carousel width="700px" dynamicHeight={false} showIndicators={false} showArrows={false} autoPlay infiniteLoop={true} stopOnHover={true} showStatus={false} className='md:block xs:hidden'>
+                
               {item.map((item)=>(
-              <div><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-[350px] w-[350px] object-contain'/></div>
+              <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-full object-contain'/></div>
             ))}
-            
+             </Carousel> 
+             
+             <Carousel width="250px" dynamicHeight={false} showIndicators={false} showArrows={false} showStatus={false} className='md:hidden xs:block'>
+                
+                {item.map((item)=>(
+                <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-full object-contain'/></div>
+              ))}
+               </Carousel>
+             <div>
            
-            </div>
+            {/* {item[0]?.properties?.default?.primary?.filter((item)=>item.ATTRIBUTE!=="Marke" ).map((item,index)=>(
+              <div className={`flex justify-between items-center font-regular py-1 px-3 text-[18px] ${
+                index % 2 === 0 ? "bg-sum-blue bg-opacity-60" : ""
+              }`} key={index}>
+                <p className='mb-2'>{item.ATTRIBUTE}</p>
+                <p>{item.VALUE}</p>
+              </div>
+            ))} */}
+              <div className='flex justify-center items-center xs:mt-8 md:mt-20'>
+              <div className='grid xl:grid-cols-2 xs:grid-cols-1 xs:gap-10 md:gap-20'>
+             <div className='flex justify-start items-start gap-3 flex-col'>
+              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>SPEZIFIKATIONEN</p>
+              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT1?.split(",").map((item)=>(
+                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
+              ))}</div>
+             </div>
+
+ 
+             <div className='flex justify-start items-start gap-3 flex-col'>
+              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>MECHANISCHE SPEZIFIKATIONEN</p>
+              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT4?.split(",").map((item)=>(
+                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
+              ))}</div>
+             </div>
+
+
+             <div className='flex justify-start items-start gap-3 flex-col '>
+              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>KONNEKTIVITÄT</p>
+              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT2?.split(",").map((item)=>(
+                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
+              ))}</div>
+             </div>
+            
+
+             <div className='flex justify-start items-start gap-3 flex-col '>
+              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>ELEKTRISCHE SPEZIFIKATIONEN</p>
+              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT3?.split(",").map((item)=>(
+                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
+              ))}</div>
+             </div>
+
+             <div className='flex justify-start items-start gap-3 flex-col'>
+              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>TRAGFÄHIGKEIT</p>
+              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT6?.split(",").map((item)=>(
+                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
+              ))}</div>
+             </div>
+
+             </div>
+             </div>
+
+             </div>
+             </div>
+           
 
           ))}
   
           
-          </div></div>):""
+  </div></div>):""
         }
-   
+   {/* <Carousel>
+               
+               {groupedImages?.map((item)=>item.map((item)=>(
+                  <div>
+                 <img src={`https://media.bbf-bike.de/shop/images/${item}`} className='h-[350px] w-[350px] object-contain'/>
+                 </div>
+               )))}
+             
+             
+          
+            
+              </Carousel>  */}
     </div>
   
 {imageNumber?(
@@ -337,7 +421,7 @@ transition-transform  duration-700 transform
 hover:opacity-100 backdrop-blur-sm md:bg-sum-white/40 sm:bg-sum-white/40 shadow-xl animate-in fade-in text-white cursor-pointer"
 >
     
-    <img src={imageNumber===1?bikes?.images[0]:imageNumber===2?bikes?.images[1]:imageNumber===3?bikes?.images[2]:bikes?.images[3]} className='w-[65%] h-[80%] object-cover' />
+    <img src={imageNumber===1?bikes?.images[0]:imageNumber===2?bikes?.images[1]:imageNumber===3?bikes?.images[2]:bikes?.images[3]} className='md:w-[65%] md:h-[80%] xs:w-[90%] xs:h-[90%] xs:object-contain md:object-cover' />
 </div>
 ):""}
   </div>
