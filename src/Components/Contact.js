@@ -13,12 +13,12 @@ const Contact = () => {
 const handleSubmit=(e)=>{
     e.preventDefault();
     if(!name||!email||!message){
-        setFill("Fill all the fields")
+        setFill("Alle Felder ausfüllen")
         setSuccess("")
         setEmailValidation("")
 
     }else if (validator.isEmail(email)){
-        setSuccess("Your message has been sent successfully")
+        setSuccess("Ihre Nachricht wurde gesendet")
         setFill("")
         setEmailValidation("")
        setName("")
@@ -27,7 +27,7 @@ const handleSubmit=(e)=>{
        
     }
     else{
-        setEmailValidation("Enter a valid email id")
+        setEmailValidation("Eine gültige E-Mail-ID eingeben")
         setFill("")
         setSuccess("")
     }
@@ -50,10 +50,10 @@ const handleSubmit=(e)=>{
             <p className='flex justify-start items-start gap-2 flex-col'>
                 <textarea type='text' className=' md:w-[350px] xs:w-[250px] h-40 focus:outline-none p-3 border-sum-black border-[1px]' 
                 onChange={(e)=>setMessage(e.target.value)} value={message}/>
-                <label className='font-regular xs:text-[14px] md:text-[18px]'>Message</label>
+                <label className='font-regular xs:text-[14px] md:text-[18px]'>Nachricht</label>
             </p>
            
-            <button className='bg-sum-blue p-1 text-sum-white rounded-full xs:text-[14px] md:text-[18px] w-24 font-regular hover:bg-opacity-80 hover:[transition:all_0.10s_ease]' onClick={handleSubmit}>Send</button>
+            <button className='bg-sum-blue p-1 text-sum-white rounded-full xs:text-[14px] md:text-[18px] xs:w-24 md:w-28 font-regular hover:bg-opacity-80 hover:[transition:all_0.10s_ease]' onClick={handleSubmit}>Absenden</button>
         
             {
                 fill?(<div className='mt-6 text-sum-red xs:text-[14px] md:text-[18px] font-regular flex justify-center items-center gap-3'>
@@ -74,7 +74,7 @@ const handleSubmit=(e)=>{
         <div className='flex justify-start items-start flex-col gap-5 xs:mt-16 xl:mt-0'>
            
            <p className='font-regular xs:text-[14px] md:text-[18px]'>
-           <h3 className='font-bold xs:text-[15px] md:text-[22px]'>Contact</h3>
+           <h3 className='font-bold xs:text-[15px] md:text-[22px]'>Kontakt</h3>
            BBF Bike GmbH <br/>
            Firmensitz: Carenaallee 8, <br/>
            15366 Hoppegarten<br/>

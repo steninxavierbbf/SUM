@@ -9,7 +9,7 @@ const Header = () => {
     const[isScrolled,setIsScrolled]= useState(false)
     const[category,setCategory]= useState([])
     const sectionsRef=useRef([])
-    const menus=["alpa","stealth","uco","contact"]
+    const menus=["alpa","stealth","uco","kontakt"]
     const[visibleSection,setVisibleSection]=useState(menus[0])
     const categories= async() =>{
       const response = await axios.get("https://data.bbf-bike.de/catalog/list/categories/39")
@@ -31,7 +31,6 @@ bikes?.bikes?.map((bike)=>categoriesBikes?.map((item)=>{
   }
 }))
 
-console.log(bikes)
 
     useEffect(() => {
       const options = {
@@ -122,7 +121,7 @@ console.log(bikes)
       
           <BannerSection bikes={bike}  refcall={refCallback} key={key}/>
     ))}
-    <div id="contact"  ref={refCallback}>
+    <div id="kontakt"  ref={refCallback}>
     <Contact/>
     </div>
 
