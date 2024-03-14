@@ -3,6 +3,7 @@ import axios from 'axios'
 import "../main.css"
 import { Carousel } from 'react-responsive-carousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import BikeSection from './BikeSection';
 const BannerSection = ({bikes,refcall}) => {
 const [imageNumber,setImageNumber]=useState(0)
 const[block,setBlock]=useState([])
@@ -129,12 +130,6 @@ const closeRef= useRef()
         }
       });
 
-    
-
-      const handleColorClick = (color) => {
-        setSelectedColor(color);
-      };
-console.log(Object.values(groupedBikes)?.map((item)=>item))
 
   return (
     <div>
@@ -269,170 +264,13 @@ console.log(Object.values(groupedBikes)?.map((item)=>item))
     
         </div>):""}
 
-        {/* {
-          bikes?.name!==undefined?(
-          <div className='md:w-full xs:w-[90%] md:px-20 flex justify-center items-center xs:mt-8 md:mt-16 xl:mt-32'>
-<div className={`grid grid-cols-1 xs:gap-10 md:gap-24`}>
-          {groupedData.map((item)=>(
-            <div className='flex justify-center items-center flex-col'>
-               <p className='xs:mb-6 md:mb-16 text-sum-blue xs:text-[15px] md:text-[20px] xl:text-[30px] font-bold'>{item[0]?.descriptions?.default?.TEXT5}</p>
-
-               <Carousel width="700px" dynamicHeight={false} showIndicators={false} showArrows={false} autoPlay infiniteLoop={true} stopOnHover={true} showStatus={false} showThumbs={item?.map((item)=>item)?.length===1? false:true } className='xl:block xs:hidden'>
-                
-              {item.map((item)=>(
-              <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-full object-contain'/></div>
-            ))}
-             </Carousel> 
-
-             <Carousel width="500px" dynamicHeight={false} showIndicators={false} showArrows={false} autoPlay infiniteLoop={true} stopOnHover={true} showStatus={false} showThumbs={item?.map((item)=>item)?.length===1? false:true } className='md:block xs:hidden xl:hidden'>
-                
-                {item.map((item)=>(
-                <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-full object-contain'/></div>
-              ))}
-               </Carousel> 
-             
-             <Carousel width="250px" dynamicHeight={false} showIndicators={false} showArrows={false} showStatus={false} showThumbs={item?.map((item)=>item)?.length===1? false:true } className='md:hidden xs:block'>
-                
-                {item.map((item)=>(
-                <div className=''><img src={`https://media.bbf-bike.de/shop/images/${item?.media[0]?.IMAGENAME}`} className='h-full object-contain'/></div>
-              ))}
-               </Carousel>
-             <div>
-           
-              <div className='flex justify-center items-center xs:mt-8 md:mt-20'>
-              <div className='grid xl:grid-cols-2 xs:grid-cols-1 xs:gap-10 md:gap-20'>
-             <div className='flex justify-start items-start gap-3 flex-col'>
-              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>SPEZIFIKATIONEN</p>
-              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT1?.split(",").map((item)=>(
-                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
-              ))}</div>
-             </div>
-
- 
-             <div className='flex justify-start items-start gap-3 flex-col'>
-              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>MECHANISCHE SPEZIFIKATIONEN</p>
-              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT4?.split(",").map((item)=>(
-                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
-              ))}</div>
-             </div>
-
-
-             <div className='flex justify-start items-start gap-3 flex-col '>
-              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>KONNEKTIVITÄT</p>
-              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT2?.split(",").map((item)=>(
-                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
-              ))}</div>
-             </div>
-            
-
-             <div className='flex justify-start items-start gap-3 flex-col '>
-              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>ELEKTRISCHE SPEZIFIKATIONEN</p>
-              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT3?.split(",").map((item)=>(
-                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
-              ))}</div>
-             </div>
-
-             <div className='flex justify-start items-start gap-3 flex-col'>
-              <p className='md:text-[20px] xs:text-[14px] text-sum-blue font-semibold'>TRAGFÄHIGKEIT</p>
-              <div className='flex justify-center items-start gap-3 flex-col'>{item[0]?.descriptions?.default?.TEXT6?.split(",").map((item)=>(
-                <div className='flex justify-start gap-3 items-center'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><div className='xs:text-[14px] md:text-[18px] font-regular'>{item}</div> </div>
-              ))}</div>
-             </div>
-
-             </div>
-             </div>
-
-             </div>
-             </div>
-           
-
-          ))}
-  
-          
-  </div></div>):""
-        } */}
-<div className='md:w-full xs:w-[90%] md:px-20 flex justify-center items-center xs:mt-8 md:mt-16 xl:mt-32'>
+<div className='md:w-full xs:w-full md:px-20 flex justify-center items-center xs:mt-8 md:mt-16 xl:mt-32 '>
 <div className={`grid grid-cols-1 xs:gap-10 md:gap-24`}>
 {Object.values(groupedBikes)?.map((bike,index)=>(
   <div key={index} >
 
 
-
-
-
-<div className="flex items-center justify-center my-10 gap-2">
-
-  {bike.map(item=>(
-    <div>{[item.color].flat().map((item)=>(
-      <div>{item}</div>
-    ))}</div>
-  ))}
-{[
-  ...new Set(bike.map((item) => item.color).flat()),
-].map((item) => (
-  <div className='relative'>
-    <div className={`h-[50px] w-[50px] bg-sum-white relative justify-center items-center flex border-4  rounded-full ${!selectedColor? setSelectedColor(bike[0]?.color[0]): item===selectedColor?"animate-pulse border-sum-blue":"border-sum-white"}`}>
-    </div> 
-    
-    
-    <div className=' flex justify-center items-center'><div
-      style={{
-        width: "30px",
-        height: "30px",
-        borderRadius: "50%",
-        margin: "5px",
-        backgroundColor: item,
-        cursor: "pointer",
-        border:"2px solid black "
-    
-      }}
-      onClick={() => handleColorClick(item)}
-     className='absolute inset-0 top-[5px] left-[5px]'></div>
-
-
-</div>
-  </div>
-))}
-
-
-
-</div>
-{console.log(bike?.find((img) =>img.color?.find((color) => color === selectedColor))?.images[0])}
-
-
-<img src={`https://media.bbf-bike.de/shop/images/${bike?.find((img) =>img?.color?.find((color) => color === selectedColor))?.images[0]}`} className='h-[450px]  object-contain'/>
-         
-               
-        
-             
-               <div className='mt-12'>
-               <p className='md:text-[22px] xs:text-[14px] text-sum-blue font-semibold mb-5'>SPEZIFIKATIONEN</p>
-           
-                {bike.find((img) =>img.color?.find((color) => color === selectedColor))?.secondary[0].map((item,index)=>(
-                  <div  className='flex justify-between   items-center text-sum-black xs:text-[14px] md:text-[18px] font-regular '>
-                    <p className='flex justify-center items-center gap-3'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><p>{item.ATTRIBUTE}</p></p>
-                    <p>{item.VALUE}</p>
-                  </div>
-                ))}
-
-
-                {/* {bike.map((item,index)=>(
-                 <div key={index}>
-                  {
-item.color?.find((color) => color === selectedColor)?.secondary?.map((item,index)=>(
-  <div  className='flex justify-between   items-center text-sum-black xs:text-[14px] md:text-[18px] font-regular '>
-  <p className='flex justify-center items-center gap-3'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><p>{item.ATTRIBUTE}</p></p>
-<p>{item.VALUE}</p>
-</div>
-))
-                  }
-</div>
-                ))} */}
-                 
-                  
-                   
-               
-                </div>
+<BikeSection bikeSection={bike}/>
   </div>
 ))}
 </div>

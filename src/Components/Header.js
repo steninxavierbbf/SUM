@@ -104,10 +104,10 @@ bikes?.bikes?.map((bike)=>categoriesBikes?.map((item)=>{
           ))}
        
         </div>
-        <div className={`flex justify-start items-center flex-row gap-48 font-bold text-[35px] ${isScrolled?"block":"hidden"} w-[60%]`}>
+        <div className={`flex justify-start items-center flex-row xl:gap-10 2xl:gap-48 font-bold text-[35px] ${isScrolled?"block":"hidden"} w-[60%]`}>
            <img src={Logo} className='object-contain w-48 cursor-pointer' onClick={goToTop}/> 
             
-            <div className='flex justify-center items-center flex-row gap-10 font-bold text-[35px]'>
+            <div className='flex justify-center items-center flex-row xl:gap-5 2xl:gap-10 font-bold text-[35px]'>
             {menus.map((item,index)=>(
      <p className={`${visibleSection===item?"text-sum-blue [transition:all_0.6s_ease]":""}`} key={index}><a href={`#${item}`}>{item.toUpperCase()}</a></p>
           ))}
