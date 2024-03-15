@@ -1,0 +1,15 @@
+  rewritebase /
+  rewriterule ^index\.html$ - [l]
+  rewritecond %{request_filename} !-f
+  rewritecond %{request_filename} !-d
+  rewritecond %{request_filename} !-l
+  rewriterule . /index.html [l]
+
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www.sum-bikes\.de [NC]
+  RewriteCond %{SERVER_PORT} 80
+  RewriteRule ^(.*)$ https://www.sum-bikes.de/$1 [R,L]
+
+  RewriteCond %{HTTP_HOST} ^sum-bikes\.de [NC]
+  RewriteCond %{SERVER_PORT} 80
+  RewriteRule ^(.*)$ https://sum-bikes.de/$1 [R,L]

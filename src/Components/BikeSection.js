@@ -72,13 +72,13 @@ const BikeSection = ({bikeSection}) => {
 <div className='w-full'>
 
 <div className=' xs:mt-0 md:mt-12'>
-               <p className='md:text-[22px] xs:text-[14px] text-sum-blue font-semibold mb-5'>SPEZIFIKATIONEN</p>
+               <p className='md:text-[22px] xs:text-[14px] text-sum-blue font-semibold xs:mb-3 md:mb-5'>SPEZIFIKATIONEN</p>
                       {images?.secondary
                         .map((prop) => prop)
-                        .flat()
+                        .flat().filter((item)=>item.ATTRIBUTE!=="Beleuchtung" && item.ATTRIBUTE!=="Modelljahr" && item.ATTRIBUTE!=="Bremse hinten" )
                         .map((item, index) => (
-                            <div  className='flex justify-between   items-center text-sum-black xs:text-[14px] md:text-[18px] font-regular ' key={index}>
-                            <p className='flex justify-center items-center gap-3'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><p>{item.ATTRIBUTE}</p></p>
+                            <div  className='flex justify-between xs:mt-1 md:mt-2  items-center text-sum-black xs:text-[14px] md:text-[18px] font-regular ' key={index}>
+                            <p className='flex justify-center items-center gap-3'><div className='h-1 xs:w-3 md:w-5 bg-sum-blue'></div><p>{item.ATTRIBUTE==="ZulGesgew"?item.ATTRIBUTE.replace("ZulGesgew","Max. Gesamtgewicht"):item.ATTRIBUTE==="Bremse vorn"?item.ATTRIBUTE.replace("Bremse vorn","Bremsen"):item.ATTRIBUTE}</p></p>
                             <p>{item.VALUE}</p>
                           </div>
                         ))}

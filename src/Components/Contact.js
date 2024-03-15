@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import validator from "validator";
 import warning from "../images/warning.png"
 import successIcon from "../images/checked.png"
+import axios from 'axios';
 const Contact = () => {
     const [name,setName]=useState("")
     const [email,setEmail]=useState("")
@@ -24,6 +25,14 @@ const handleSubmit=(e)=>{
        setName("")
        setEmail("")
        setMessage("")
+       axios.post("https://api.bbf-bike.de/api/mailer/sum",{
+        name: name,
+        email: email,
+        subject:"SUM Formular" ,
+        nachricht: message,
+        telephone: "no phone number"
+       })    .then((res) => console.log(res))
+       .catch((err) => console.log(err));
        
     }
     else{
@@ -33,22 +42,22 @@ const handleSubmit=(e)=>{
     }
 }
   return (
-    <div className=' flex justify-center items-center'>
-    <div className=' xs:w-[90%] xl:w-[60%] xs:py-12 md:p-20  bg-sum-gray mt-[110px] xl:block xs:flex xs:justify-center'>
+    <div className=' flex justify-center items-center xs:mb-[100px] xl:mb-[150px]'>
+    <div className=' xs:w-[90%] xl:w-[60%] xs:py-12 md:p-20  bg-sum-gray mt-[150px] xl:block xs:flex xs:justify-center'>
         <div className='flex md:justify-between xs:justify-center xs:items-start md:items-start xl:flex-row xs:flex-col'>
         <div className='flex flex-col justify-start xs:items-end md:items-end gap-6 '>
             <p className='flex justify-start items-start gap-2 flex-col'>
-                <input type='text' className='md:w-[350px] xs:w-[250px] border-sum-black border-[1px] xs:h-8 md:h-10 focus:outline-none p-3' 
+                <input type='text' className='md:w-[350px] xl:w-[300px] 2xl:w-[350px] xs:w-[250px] border-sum-black border-[1px] xs:h-8 md:h-10 focus:outline-none p-3' 
                 onChange={(e)=>setName(e.target.value)} value={name}/>
                 <label className='font-regular xs:text-[14px] md:text-[18px]'>Name</label>
             </p>
             <p className='flex justify-start items-start gap-2 flex-col'>
-                <input type='text' className='md:w-[350px] xs:w-[250px] xs:h-8 md:h-10 focus:outline-none p-3 border-sum-black border-[1px]' 
+                <input type='text' className='md:w-[350px] xl:w-[300px] 2xl:w-[350px] xs:w-[250px] xs:h-8 md:h-10 focus:outline-none p-3 border-sum-black border-[1px]' 
                 onChange={(e)=>setEmail(e.target.value)} value={email}/>
                 <label className='font-regular xs:text-[14px] md:text-[18px]'>Email</label>
             </p>
             <p className='flex justify-start items-start gap-2 flex-col'>
-                <textarea type='text' className=' md:w-[350px] xs:w-[250px] h-40 focus:outline-none p-3 border-sum-black border-[1px]' 
+                <textarea type='text' className='md:w-[350px] xl:w-[300px] 2xl:w-[350px] xs:w-[250px] h-40 focus:outline-none p-3 border-sum-black border-[1px]' 
                 onChange={(e)=>setMessage(e.target.value)} value={message}/>
                 <label className='font-regular xs:text-[14px] md:text-[18px]'>Nachricht</label>
             </p>
@@ -80,8 +89,8 @@ const handleSubmit=(e)=>{
            15366 Hoppegarten<br/>
            </p>
            <p className='font-regular xs:text-[14px] md:text-[18px]'>
-           Telefon: +49 (0) 3342 354-341<br/>
-           Fax: +49 (0) 3342 354-333
+           Telefon: +49 (0) 3342 354-325<br/>
+           Fax: +49 (0) 3342 354-332
            </p>
         </div>
         </div>

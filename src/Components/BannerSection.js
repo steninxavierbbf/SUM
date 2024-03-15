@@ -133,8 +133,8 @@ const closeRef= useRef()
 
   return (
     <div>
-    <div className={`flex justify-center items-center flex-col  ${bikes?.name==="alpa"? "xs:mt-0 lg:mt-[150px]":""}`} id={bikes?.name!==undefined || bikes?.id!==undefined? bikes?.name:""} ref={refcall}>
-    <div className={`xl:w-[60%] xs:w-[90%] ${bikes?.name!==undefined? "md:pb-20 xs:pb-5 xs:mt-[100px] xl:mt-[150px]":""} ${bikes?.name==="stealth"?"bg-sum-white":"bg-sum-white"} `} >
+    <section className={`flex justify-center items-center flex-col  ${bikes?.name==="alpa"? "xs:mt-0 lg:mt-[0px]":""}`} id={bikes?.name!==undefined || bikes?.id!==undefined? bikes?.name:""} ref={refcall}>
+    <div className={`xl:w-[60%] xs:w-[90%] ${bikes?.name!==undefined? "md:pb-20 xs:pb-5 xs:mt-[100px] xl:mt-[157px]":""} ${bikes?.name==="stealth"?"bg-sum-white":"bg-sum-white"} `} >
 
 {bikes?.name==="stealth"?( <div className='grid-container '>
             <div className={`gallery__item--2-1 group relative  cursor-pointer`} onClick={()=>imageEnlargement(1)}>
@@ -255,10 +255,13 @@ const closeRef= useRef()
 </div>
 </div>):""
        
-    }    
-    {bikes?.name!==undefined? ( <div className='xs:text-[16px] md:text-[20px] flex justify-center items-center font-regular mb-6'>
-        <p className='xl:w-[65%] xs:w-[90%] '>
-          {bikes?.description?.split(",").map((item)=>(
+    }  
+   
+              <div className='md:mb-14 xs:mb-5 xs:text-[16px] md:text-[20px] '>{bikes?.description?.split(",")[0]}</div>   
+    {bikes?.name!==undefined? ( <div className='xs:text-[16px] md:text-[20px] flex justify-start items-center font-regular mb-6'>
+        <p className=' flex justify-start items-start gap-2 flex-col '>
+
+          {bikes?.description?.split(",").slice(1).map((item)=>(
           <div className='flex justify-start gap-3 items-start'><div>•</div><div>{item}</div> </div>
         ))}</p>
     
@@ -275,8 +278,11 @@ const closeRef= useRef()
 ))}
 </div>
 
+
 </div>
+   
     </div>
+
      
 {imageNumber?(
   <div
@@ -289,7 +295,7 @@ hover:opacity-100 backdrop-blur-sm md:bg-sum-white/40 sm:bg-sum-white/40 shadow-
     <img src={imageNumber===1?bikes?.images[0]:imageNumber===2?bikes?.images[1]:imageNumber===3?bikes?.images[2]:bikes?.images[3]} className='md:w-[90%] md:h-[65%] xl:w-[65%] xl:h-[80%] xs:w-[90%] xs:h-[90%] xs:object-contain md:object-cover' />
 </div>
 ):""}
-  </div>
+  </section>
 
   </div>
   )
